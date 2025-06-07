@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 
+
 export const CreateClientView = () => {
     const navigate = useNavigate();
     const [createClient, setcreateClient] = useState({
@@ -14,7 +15,7 @@ export const CreateClientView = () => {
 
     const onSubmit = async () => {
         try {
-            const res = await axios.post(
+            await axios.post(
                 "http://localhost:4000/clients/create",createClient 
                 );
             navigate("/full-client");
@@ -58,7 +59,8 @@ export const CreateClientView = () => {
                 </Form.Group>
 
               
-                  <Button className="text-center" type="submit" variant="primary" onClick={() => onSubmit()}>🧑‍💻 Crear Cliente</Button>
+                  <Button className="text-center" type="submit" variant="primary" onClick={() => onSubmit() }>🧑‍💻 Crear Cliente</Button>
+                  <Button className="text-center"  variant="primary" onClick={() => navigate(`/full-client`)}>🧑 Ver Lista de Cliente</Button>
                 
               </Form>
             </Card.Body>
