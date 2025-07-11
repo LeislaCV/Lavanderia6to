@@ -7,13 +7,16 @@ import {
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
-import CreateOrder from './CreateOrder';
-import App from './App';
 import ClientView from './CreateClientView';
 import UserView from './CreateUserView';
 import FullView from './FullClientsModuleView';
 import Update from './UpdateClientView';
 import Login  from './Login';
+import App from './App';
+import CreateOrder from './CreateOrder';
+import GarmentView from './Garments';
+import ServicesView from './Services';
+
 
 
 const router = createBrowserRouter([
@@ -38,9 +41,17 @@ const router = createBrowserRouter([
     path: '/login',
     element: <Login />,
   },
-{
+  {
     path: '/hola',
     element: <CreateOrder />,
+  },
+  {
+    path: '/alta-garment',
+    element: <GarmentView />,
+  },
+   {
+    path: '/alta-services',
+    element: <ServicesView />,
   },
  {
     path: '/App',

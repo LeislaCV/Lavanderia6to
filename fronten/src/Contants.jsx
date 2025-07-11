@@ -6,7 +6,7 @@ const services = [
         unitPrice:22
     },
     {
-        name: "Plachado",
+        name: "Planchado",
         quantity: 0,
         unitPrice:60
     },
