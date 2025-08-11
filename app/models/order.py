@@ -2,7 +2,7 @@ from app.database.db import db
 from datetime import datetime
 
 class Order(db.Model):
-    __tablename__ = 'orders'
+    __tablename__ = "orders"
     
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'), nullable=False)
@@ -10,15 +10,16 @@ class Order(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now())
     estimated_delivery_date = db.Column(db.DateTime, nullable=True)
     real_delivery_date = db.Column(db.DateTime)
-    state = db.Column(db.String(20), default='recibido')  #recibido, en proceso, entregado, listo
+    state = db.Column(db.String(20), default="recibido")  #recibido, en proceso, entregado, listo
     total = db.Column(db.Integer, nullable=False)
     pagado = db.Column(db.Boolean, default=False)
     #Relaciones inversas pendientes
-    garment = db.relationship("Garment", backref="order", lazy=True) #lazy permite hacer la consulta o no hacerla
+    garments = db.relationship('Garment', backref='order', lazy= True)
+    #lazy permite hacer la consulta o no hacerla
     #Relacion de pago 
         
     def to_dict(self,garments:bool=False): #Para transformalos en diccionario
-        """ order = {
+        order = {
             'id': self.id,
             'client_id': self.client_id,
             'user_id': self.user_id,
@@ -32,6 +33,5 @@ class Order(db.Model):
         }
         if garments:
             order['garments'] = self.garments
-        return order """
-        return self.__dict__
+        return order 
     

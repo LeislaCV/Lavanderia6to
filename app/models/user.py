@@ -13,17 +13,18 @@ class User(db.Model):
     state = db.Column(db.String(20), default="activo")#activo/inactivo
     created_at = db.Column(db.DateTime, default=datetime.now())
 
-    orders = db.relationship("Order", backref="user", lazy=True)
+    orders = db.relationship("Order", backref="users", lazy=True)
 
-    def to_dict(self):
+    def to_dict(self,orders:bool=False):
         user = {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email,
+            'id':self.id,
+            'name':self.name,
+            'email':self.email,
             'rol':self.rol,
             'state':self.state,
-            'created_at': self.created_at,
+            'created_at':self.created_at,
         }
+        if orders:
+            user['orders'] = self.orders
         return user
-    
-    
+ 

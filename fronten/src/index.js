@@ -16,6 +16,8 @@ import App from './App';
 import CreateOrder from './CreateOrder';
 import GarmentView from './Garments';
 import ServicesView from './Services';
+import  Dashboard  from './Dashboard';
+import { List } from './components/garments/List';
 
 
 
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
  {
     path: '/App',
     element: <App />,
+  },
+   {
+    path: '/dashboard',
+    element: <Dashboard />,
+  },
+  {
+    path: '/garments',
+    element: <List />,
   },
 
 ]);

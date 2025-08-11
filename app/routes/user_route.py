@@ -2,13 +2,13 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
 from app.models.user import User
 from app.database.db import db
-from app.controllers.user_controller import logout_user, login_user, update_user, toggle_user_status,get_user_logs
+from app.controllers.user_controller import logout_user, login_user, update_user, toggle_user_status,get_user_logs, get_users, delete_user 
 user_bp = Blueprint('users', __name__, url_prefix='/users')
 
 
 @user_bp.route('/register', methods=['POST'])
 
-def register_user():
+def create_user():
 
     data= request.get_json()
     name = data.get('name')
@@ -55,8 +55,8 @@ def update(user_id):
 @user_bp.route("/change/<int:user_id>/status", methods=["PATCH"])
 def change_status(user_id):
     data = request.json
-    active = data.get("active")
-    user = toggle_user_status(user_id, active)
+    is_active = data.get("active")
+    user = toggle_user_status(user_id, is_active)
     if user:
         return jsonify({"msg": "Yeiii, estatus acttualizado !!", "activo":user.state}),200
     return jsonify({"msg":"Upss, algo salio mal al intentar actualizar el estado del usuario"}),400
@@ -67,8 +67,22 @@ def get_logs(user_id):
     data = []
 
     for log in logs:
-        log.date = log.date.isoformat()
         data.append(log.to_dict())
     return jsonify({
         "msg": "Yeiii, Logs obtenidos con exito",
          "logs":data}), 200
+
+@user_bp.route("/get-all", methods=["GET"])
+def get_all():
+    users = get_users()
+    return jsonify([user.to_dict() for user in users])
+
+@user_bp.route("/delete/<int:id>", methods=["DELETE"])
+def delete(id):
+    deleted = delete_user(id)  
+    
+    if deleted:
+        return jsonify({"msg": "Yeiii, Usuario eliminado con éxito! :3"}), 200
+    else:
+        return jsonify({"msg": "Upss, no se encontró el usuario o no se pudo eliminar"}), 400
+

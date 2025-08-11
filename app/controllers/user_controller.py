@@ -24,13 +24,13 @@ def logout_user(user_id):
     db.session.commit()
     return True
 
-def update_user(user_id, update_data):
+def update_user(user_id, updated_data):
     #Buscar al usuario
     user = User.query.get(user_id)
     if not user:
         return None
     
-    for key, value in update_data.items():
+    for key, value in updated_data.items():
         if key == "password":
             setattr(user, key, generate_password_hash(value))
         else:
@@ -50,3 +50,17 @@ def get_user_logs(user_id):
     logs = Log.query.filter_by(user_id=user_id).order_by(Log.date.desc()).all()
     return logs
 
+def get_users():
+        return User.query.filter().all()
+    
+def delete_user(id):
+    user = User.query.get(id)
+    if not user:
+        return False
+    
+    # Primero borrar los logs asociados
+    Log.query.filter_by(user_id=id).delete()
+
+    db.session.delete(user)
+    db.session.commit()
+    return True

@@ -1,4 +1,4 @@
-import { Button, Card, Container, Table,Row, Col } from 'react-bootstrap';
+import { Button, Card, Container, Table } from 'react-bootstrap';
 import './App.css';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
